@@ -1,19 +1,183 @@
-<div class="container top-buffer h5">
-    Hospital Contact Information
-</div>
-<form class="form-class">
+<form class="form-class" name="myForm">
+    <div class="container top-buffer h5">
+        Hospital Information
+    </div>
 
+    <div class="container border padding-buffer">
+        <div class="form-group row mt-4">
+            <label for="hospital_name" class="col col-md-5 col-form-label">Hospital Name<span
+                    class="required">*</span></label>
+            <div class="col col-md-7">
+                <input type="text" class="form-control" [(ngModel)]="hospital.name" name="hospitalName" required>
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col col-md-5 pt-0">Hospital Type<span class="required">*</span></legend>
+                <div class="col col-md-7">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radio1" id="radio1" value="option1" required>
+                        <label class="form-check-label" for="radio1">
+                            Government/Public
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radio1" id="radio1" value="option2" required>
+                        <label class="form-check-label" for="radio1">
+                            Private
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group row">
+            <label for="accreditation" class="col col-md-5 col-form-label">Accreditation<span
+                    class="required">*</span></label>
+            <div class="col col-md-7">
+                <textarea class="form-control" [(ngModel)]="hospital.accreditation" name="accreditation" rows="3" required></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col col-md-5">Health Care Provider Type</div>
+            <div class="col col-md-7">
+                <div class="row">
+                    <div class="form-check col col-md-4">
+                        <input class="form-check-input" type="checkbox" id="gridCheck1">
+                        <label class="form-check-label" for="gridCheck1">
+                            Hospital
+                        </label>
+                    </div>
+                    <div class="form-check col col-md-4">
+                        <input class="form-check-input" type="checkbox" id="gridCheck2">
+                        <label class="form-check-label" for="gridCheck2">
+                            Dispensary
+                        </label>
+                    </div>
+                    <div class="form-check col col-md-4">
+                        <input class="form-check-input" type="checkbox" id="gridCheck3">
+                        <label class="form-check-label" for="gridCheck3">
+                            Community Health Centre
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-check col col-md-4">
+                        <input class="form-check-input" type="checkbox" id="gridCheck6">
+                        <label class="form-check-label" for="gridCheck6">
+                            Sub Centre
+                        </label>
+                    </div>
+                    <div class="form-check col col-md-4">
+                        <input class="form-check-input" type="checkbox" id="gridCheck7">
+                        <label class="form-check-label" for="gridCheck7">
+                            Poly Clinic
+                        </label>
+                    </div>
+                    <div class="form-check col col-md-4">
+                        <input class="form-check-input" type="checkbox" id="gridCheck8">
+                        <label class="form-check-label" for="gridCheck8">
+                            Clinic
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-check col col-md-4">
+                        <input class="form-check-input" type="checkbox" id="gridCheck6">
+                        <label class="form-check-label" for="gridCheck6">
+                            Nursing Home
+                        </label>
+                    </div>
+                    <div class="form-check col col-md-4">
+                        <input class="form-check-input" type="checkbox" id="gridCheck7">
+                        <label class="form-check-label" for="gridCheck7">
+                            Medical College / Institute
+                        </label>
+                    </div>
+                    <div class="form-check col col-md-4">
+                        <input class="form-check-input" type="checkbox" id="gridCheck8">
+                        <label class="form-check-label" for="gridCheck8">
+                            Others
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="reg_num" class="col col-md-5 col-form-label">Hospital Registration Number<span
+                    class="required">*</span></label>
+            <div class="col col-md-7">
+                <input type="text" class="form-control" [(ngModel)]="hospital.registrationNo" name="registrationNo" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="reg_num_scan" class="col col-md-5 col-form-label">Registration Number Scanned Copy<span
+                    class="required">*</span></label>
+            <div class="col col-md-7">
+                <input type="file" id="reg_num_scan" required>
+                <p class="help-block">(only JPG, GIF, PNG images with max size: 4 MB allowed)</p>
+            </div>
+        </div>
+    </div>
+    <div class="contact">
+
+        <div class="container top-buffer h5">
+            Hospital Address
+        </div>
+
+        <div class="container border padding-buffer">
+            <div class="form-group row mt-4">
+                <label for="hosp_add" class="col col-md-3 col-form-label">Address<span class="required">*</span></label>
+                <div class="col col-md-7">
+                    <textarea type="text" class="form-control" [(ngModel)]="hospital.address" name="address" rows="3" required></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="pincode" class="col col-md-3 col-form-label">Pin Code<span class="required">*</span></label>
+                <div class="col col-md-7">
+                    <div class="form-check-inline row">
+                        <div class="col">
+                            <input type="text" class="form-control" [(ngModel)]="hospital.pincode" name="pincode" minlength="6"
+                                maxlength="6"
+                                onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                                required autocomplete="new-password" required (change)="get_details()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="district" class="col col-md-3 col-form-label">District<span
+                        class="required">*</span></label>
+                <div class="col col-md-3">
+                    <input type="text" class="form-control" [(ngModel)]="hospital.district" name="city" disabled placeholder="City"
+                        required>
+
+                </div>
+                <label for="state" class="col col-md-3 col-form-label">State<span class="required">*</span></label>
+                <div class="col col-md-3">
+                    <input type="text" class="form-control" [(ngModel)]="hospital.state" name="state" disabled placeholder="State"
+                        required>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container top-buffer h5">
+        Hospital Contact Information
+    </div>
     <div class="container border padding-buffer">
         <div class="form-group">
             <div class="row">
-                <div class="col col-md-5">
-                    Telephone / Landline (STD + NUMBER) *
-                </div>
+                <label for="hospital_telephone_country" class="col col-md-5">
+                    Telephone / Landline (STD + NUMBER)<span class="required">*</span></label>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_telephone_country">
+                    <input class="form-control" type="text" name="hospital_telephone_country"
+                        onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                        minlength="10" maxlength="10">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_telephone_no">
+                    <input class="form-control" type="text" name="hospital_telephone_no"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
             </div>
         </div>
@@ -23,10 +187,14 @@
                     Mobile No.
                 </div>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="mobile_emergency_country">
+                    <input class="form-control" type="text" name="mobile_emergency_country"
+                        onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                        minlength="10" maxlength="10">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="mobile_emergency_no">
+                    <input class="form-control" type="text" name="mobile_emergency_no"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
             </div>
         </div>
@@ -36,10 +204,14 @@
                     Emergency Number
                 </div>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_emergency_country">
+                    <input class="form-control" type="text" name="hospital_emergency_country"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_emergency_no">
+                    <input class="form-control" type="text" name="hospital_emergency_no"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
             </div>
         </div>
@@ -49,10 +221,14 @@
                     Ambulance Phone No.
                 </div>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_ambulance_country">
+                    <input class="form-control" type="text" name="hospital_ambulance_country"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_ambulance_no">
+                    <input class="form-control" type="text" name="hospital_ambulance_no"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
             </div>
         </div>
@@ -62,10 +238,14 @@
                     Blood Bank Phone No
                 </div>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_bb_country">
+                    <input class="form-control" type="text" name="hospital_bb_country"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_bb_no">
+                    <input class="form-control" type="text" name="hospital_bb_no"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
             </div>
         </div>
@@ -75,10 +255,14 @@
                     Foreign Patient Care/ International Patient Wing
                 </div>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_foreign_country">
+                    <input class="form-control" type="text" name="hospital_foreign_country"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_foreign_care_no">
+                    <input class="form-control" type="text" name="hospital_foreign_care_no"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
             </div>
         </div>
@@ -88,10 +272,14 @@
                     Toll Free Number (If any)
                 </div>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_toll_free_country">
+                    <input class="form-control" type="text" name="hospital_toll_free_country"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_toll_free_no">
+                    <input class="form-control" type="text" name="hospital_toll_free_no"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
             </div>
         </div>
@@ -101,20 +289,24 @@
                     Hospital Fax No.
                 </div>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_fax_country">
+                    <input class="form-control" type="text" name="hospital_fax_country"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_fax_no">
+                    <input class="form-control" type="text" name="hospital_fax_no"
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="row">
                 <div class="col col-md-5">
-                    Hospital Primary Email Id *
+                    Hospital Primary Email Id<span class="required">*</span>
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_primary_email">
+                    <input class="form-control" type="text" [(ngModel)]="hospital.primaryEmailId" name="hospital_primary_email">
                 </div>
             </div>
         </div>
@@ -124,17 +316,17 @@
                     Hospital Secondary Email Id
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_secondary_email">
+                    <input class="form-control" type="text" [(ngModel)]="hospital.secondaryEmailId" name="hospital_secondary_email">
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="row">
                 <div class="col col-md-5">
-                    Website
+                    Website URL
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_url">
+                    <input class="form-control" type="text" [(ngModel)]="hospital.website" name="hospital_url">
                 </div>
             </div>
         </div>
@@ -146,38 +338,45 @@
         <div class="form-group">
             <div class="row">
                 <div class="col col-md-5">
-                    Authorised Personnel Name
+                    Authorised Personnel Name<span class="required">*</span>
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="text" name="personnel_name">
+                    <input class="form-control" type="text" [(ngModel)]="hospital.personnelName" name="personnel_name" required>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="row">
                 <div class="col col-md-5">
-                    Personnel Contact Number
+                    Personnel Contact Number<span class="required">*</span>
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="text" name="personnel_contact">
+                    <input class="form-control" type="text" [(ngModel)]="hospital.personnelNo" name="personnel_contact" required
+                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
+                    minlength="10" maxlength="10">
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="row">
                 <div class="col col-md-5">
-                    Personnel Email ID
+                    Personnel Email ID<span class="required">*</span>
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="email" [(ngModel)]="personnel.email" name="personnel_email">
+                    <input class="form-control" type="email" [(ngModel)]="hospital.personnelEmail" name="personnel_email"
+                        required>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="base container">
+        <p>Indicates Required Fields<span class="required">*</span></p>
+    </div>
     <div class="form-group">
         <div class="row top-buffer">
             <div class="col col-md-22 text-center">
-                <button class="btn btn-outline-cerner">Register</button>
+                <button class="btn btn-outline-cerner" (click)="registerHospital()" ng-disabled="myForm.$invalid">Register</button>
             </div>
         </div>
     </div>

@@ -24,3 +24,21 @@
   .container{
       max-width: 1000px;
   }
+
+  .div_header{
+    text-align: center;
+    border-style: groove;
+  }
+  .required{
+    color: red;
+  }
+  .base{
+    text-align: right;
+  }
+  .cus_btn{
+    
+    padding: 10px 20px;
+    font-size: 11px;
+    border-radius: 5px;
+  
+  }
