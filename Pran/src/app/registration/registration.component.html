@@ -1,2 +1,184 @@
-<p>registration works!</p>
-<button class="btn btn-danger">Test Button for Bootstrap</button>
+<div class="container top-buffer h5">
+    Hospital Contact Information
+</div>
+<form class="form-class">
+
+    <div class="container border padding-buffer">
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Telephone / Landline (STD + NUMBER) *
+                </div>
+                <div class="col col-md-2 offset-md-2">
+                    <input class="form-control" type="text" name="hospital_telephone_country">
+                </div>
+                <div class="col col-md-3">
+                    <input class="form-control" type="text" name="hospital_telephone_no">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Mobile No.
+                </div>
+                <div class="col col-md-2 offset-md-2">
+                    <input class="form-control" type="text" name="mobile_emergency_country">
+                </div>
+                <div class="col col-md-3">
+                    <input class="form-control" type="text" name="mobile_emergency_no">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Emergency Number
+                </div>
+                <div class="col col-md-2 offset-md-2">
+                    <input class="form-control" type="text" name="hospital_emergency_country">
+                </div>
+                <div class="col col-md-3">
+                    <input class="form-control" type="text" name="hospital_emergency_no">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Ambulance Phone No.
+                </div>
+                <div class="col col-md-2 offset-md-2">
+                    <input class="form-control" type="text" name="hospital_ambulance_country">
+                </div>
+                <div class="col col-md-3">
+                    <input class="form-control" type="text" name="hospital_ambulance_no">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Blood Bank Phone No
+                </div>
+                <div class="col col-md-2 offset-md-2">
+                    <input class="form-control" type="text" name="hospital_bb_country">
+                </div>
+                <div class="col col-md-3">
+                    <input class="form-control" type="text" name="hospital_bb_no">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Foreign Patient Care/ International Patient Wing
+                </div>
+                <div class="col col-md-2 offset-md-2">
+                    <input class="form-control" type="text" name="hospital_foreign_country">
+                </div>
+                <div class="col col-md-3">
+                    <input class="form-control" type="text" name="hospital_foreign_care_no">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Toll Free Number (If any)
+                </div>
+                <div class="col col-md-2 offset-md-2">
+                    <input class="form-control" type="text" name="hospital_toll_free_country">
+                </div>
+                <div class="col col-md-3">
+                    <input class="form-control" type="text" name="hospital_toll_free_no">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Hospital Fax No.
+                </div>
+                <div class="col col-md-2 offset-md-2">
+                    <input class="form-control" type="text" name="hospital_fax_country">
+                </div>
+                <div class="col col-md-3">
+                    <input class="form-control" type="text" name="hospital_fax_no">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Hospital Primary Email Id *
+                </div>
+                <div class="col col-md-5 offset-md-2">
+                    <input class="form-control" type="text" name="hospital_primary_email">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5 ">
+                    Hospital Secondary Email Id
+                </div>
+                <div class="col col-md-5 offset-md-2">
+                    <input class="form-control" type="text" name="hospital_secondary_email">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Website
+                </div>
+                <div class="col col-md-5 offset-md-2">
+                    <input class="form-control" type="text" name="hospital_url">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container top-buffer h5">
+        Authorised Personnel Details
+    </div>
+    <div class="container padding-buffer border">
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Authorised Personnel Name
+                </div>
+                <div class="col col-md-5 offset-md-2">
+                    <input class="form-control" type="text" name="personnel_name">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Personnel Contact Number
+                </div>
+                <div class="col col-md-5 offset-md-2">
+                    <input class="form-control" type="text" name="personnel_contact">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col col-md-5">
+                    Personnel Email ID
+                </div>
+                <div class="col col-md-5 offset-md-2">
+                    <input class="form-control" type="email" [(ngModel)]="personnel.email" name="personnel_email">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row top-buffer">
+            <div class="col col-md-22 text-center">
+                <button class="btn btn-outline-cerner">Register</button>
+            </div>
+        </div>
+    </div>
+</form>

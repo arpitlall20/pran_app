@@ -1,4 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+
+export class Personnel{
+
+  email:String
+
+  constructor(){
+
+  }
+}
 
 @Component({
   selector: 'app-registration',
@@ -7,9 +18,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor() { }
+  public personnel = new Personnel();
+  personnelEmailFlag = true;
+
+  constructor(public title:Title, public router:Router) {
+    this.title.setTitle("Register with us")
+   }
 
   ngOnInit(): void {
+  }
+
+  registerHospital(){
+    this.router.navigateByUrl("https://www.cerner.com")
   }
 
 }
