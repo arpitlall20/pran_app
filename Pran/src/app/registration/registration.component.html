@@ -1,4 +1,4 @@
-<form class="form-class" name="myForm">
+<form class="form-class" name="myForm" (ngSubmit)="registerHospital()" ngNativeValidate>
     <div class="container top-buffer h5">
         Hospital Information
     </div>
@@ -8,7 +8,7 @@
             <label for="hospital_name" class="col col-md-5 col-form-label">Hospital Name<span
                     class="required">*</span></label>
             <div class="col col-md-7">
-                <input type="text" class="form-control" [(ngModel)]="hospital.name" name="hospitalName" required>
+                <input type="text" class="form-control" [(ngModel)]="Hospital.hospitalName" name="hospitalName" required>
             </div>
         </div>
         <fieldset class="form-group">
@@ -34,7 +34,7 @@
             <label for="accreditation" class="col col-md-5 col-form-label">Accreditation<span
                     class="required">*</span></label>
             <div class="col col-md-7">
-                <textarea class="form-control" [(ngModel)]="hospital.accreditation" name="accreditation" rows="3" required></textarea>
+                <textarea class="form-control" [(ngModel)]="Hospital.hospitalAccredition" name="accreditation" rows="3" required></textarea>
             </div>
         </div>
         <div class="form-group row">
@@ -107,7 +107,7 @@
             <label for="reg_num" class="col col-md-5 col-form-label">Hospital Registration Number<span
                     class="required">*</span></label>
             <div class="col col-md-7">
-                <input type="text" class="form-control" [(ngModel)]="hospital.registrationNo" name="registrationNo" required>
+                <input type="text" class="form-control" [(ngModel)]="Hospital.hospitalRegistrationNo" name="registrationNo" required>
             </div>
         </div>
         <div class="form-group row">
@@ -128,16 +128,16 @@
         <div class="container border padding-buffer">
             <div class="form-group row mt-4">
                 <label for="hosp_add" class="col col-md-3 col-form-label">Address<span class="required">*</span></label>
-                <div class="col col-md-7">
-                    <textarea type="text" class="form-control" [(ngModel)]="hospital.address" name="address" rows="3" required></textarea>
+                <div class="col col-md-9">
+                    <textarea type="text" class="form-control" [(ngModel)]="Hospital.site.location.address" name="address" rows="3" required></textarea>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="pincode" class="col col-md-3 col-form-label">Pin Code<span class="required">*</span></label>
                 <div class="col col-md-7">
                     <div class="form-check-inline row">
-                        <div class="col">
-                            <input type="text" class="form-control" [(ngModel)]="hospital.pincode" name="pincode" minlength="6"
+                        <div class="col col-md-12">
+                            <input type="text" class="form-control" [(ngModel)]="Hospital.site.location.pincode" name="pincode" minlength="6"
                                 maxlength="6"
                                 onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
                                 required autocomplete="new-password" required (change)="get_details()">
@@ -149,13 +149,13 @@
                 <label for="district" class="col col-md-3 col-form-label">District<span
                         class="required">*</span></label>
                 <div class="col col-md-3">
-                    <input type="text" class="form-control" [(ngModel)]="hospital.district" name="city" disabled placeholder="City"
+                    <input type="text" class="form-control" [(ngModel)]="Hospital.site.location.district" name="city" disabled placeholder="City"
                         required>
 
                 </div>
                 <label for="state" class="col col-md-3 col-form-label">State<span class="required">*</span></label>
                 <div class="col col-md-3">
-                    <input type="text" class="form-control" [(ngModel)]="hospital.state" name="state" disabled placeholder="State"
+                    <input type="text" class="form-control" [(ngModel)]="Hospital.site.location.state" name="state" disabled placeholder="State"
                         required>
                 </div>
             </div>
@@ -168,31 +168,14 @@
         <div class="form-group">
             <div class="row">
                 <label for="hospital_telephone_country" class="col col-md-5">
-                    Telephone / Landline (STD + NUMBER)<span class="required">*</span></label>
+                    Telephone / Landline <span class="required">*</span></label>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_telephone_country"
+                    <input class="form-control" type="text" name="hospital_telephone_country" placeholder="STD Code" [(ngModel)]="telephone.landlineStd"
                         onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
-                        minlength="10" maxlength="10">
+                        maxlength="5">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_telephone_no"
-                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
-                    minlength="10" maxlength="10">
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col col-md-5">
-                    Mobile No.
-                </div>
-                <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="mobile_emergency_country"
-                        onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
-                        minlength="10" maxlength="10">
-                </div>
-                <div class="col col-md-3">
-                    <input class="form-control" type="text" name="mobile_emergency_no"
+                    <input class="form-control" type="text" name="hospital_telephone_no" placeholder="Landline Number" [(ngModel)]="telephone.landlineNo"
                     onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
                     minlength="10" maxlength="10">
                 </div>
@@ -204,12 +187,12 @@
                     Emergency Number
                 </div>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_emergency_country"
+                    <input class="form-control" type="text" name="hospital_emergency_country" placeholder="STD Code" [(ngModel)]="telephone.emergencyStd"
                     onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
-                    minlength="10" maxlength="10">
+                    maxlength="5">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_emergency_no"
+                    <input class="form-control" type="text" name="hospital_emergency_no" placeholder="Emergency Number" [(ngModel)]="telephone.emergencyNo"
                     onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
                     minlength="10" maxlength="10">
                 </div>
@@ -221,12 +204,12 @@
                     Ambulance Phone No.
                 </div>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_ambulance_country"
+                    <input class="form-control" type="text" name="hospital_ambulance_country" placeholder="STD Code" [(ngModel)]="telephone.ambulanceStd"
                     onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
-                    minlength="10" maxlength="10">
+                    maxlength="5">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_ambulance_no"
+                    <input class="form-control" type="text" name="hospital_ambulance_no" placeholder="Ambulance Number" [(ngModel)]="telephone.ambulanceNo"
                     onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
                     minlength="10" maxlength="10">
                 </div>
@@ -238,29 +221,12 @@
                     Blood Bank Phone No
                 </div>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_bb_country"
+                    <input class="form-control" type="text" name="hospital_bb_country" placeholder="STD Code" [(ngModel)]="telephone.bloodbankStd"
                     onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
-                    minlength="10" maxlength="10">
+                    maxlength="5">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_bb_no"
-                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
-                    minlength="10" maxlength="10">
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col col-md-5">
-                    Foreign Patient Care/ International Patient Wing
-                </div>
-                <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_foreign_country"
-                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
-                    minlength="10" maxlength="10">
-                </div>
-                <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_foreign_care_no"
+                    <input class="form-control" type="text" name="hospital_bb_no" placeholder="Blood Bank Number" [(ngModel)]="telephone.bloodbankNo"
                     onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
                     minlength="10" maxlength="10">
                 </div>
@@ -272,12 +238,12 @@
                     Toll Free Number (If any)
                 </div>
                 <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_toll_free_country"
+                    <input class="form-control" type="text" name="hospital_toll_free_country" placeholder="STD Code" [(ngModel)]="telephone.tollfreeStd"
                     onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
-                    minlength="10" maxlength="10">
+                    maxlength="5">
                 </div>
                 <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_toll_free_no"
+                    <input class="form-control" type="text" name="hospital_toll_free_no" placeholder="Toll Free Number" [(ngModel)]="telephone.tollfreeNo"
                     onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
                     minlength="10" maxlength="10">
                 </div>
@@ -286,15 +252,10 @@
         <div class="form-group">
             <div class="row">
                 <div class="col col-md-5">
-                    Hospital Fax No.
+                    Mobile No.
                 </div>
-                <div class="col col-md-2 offset-md-2">
-                    <input class="form-control" type="text" name="hospital_fax_country"
-                    onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
-                    minlength="10" maxlength="10">
-                </div>
-                <div class="col col-md-3">
-                    <input class="form-control" type="text" name="hospital_fax_no"
+                <div class="col col-md-5 offset-md-2">
+                    <input class="form-control" type="text" name="mobile_emergency_no" [(ngModel)] = "Hospital.contact.mobileNo"
                     onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
                     minlength="10" maxlength="10">
                 </div>
@@ -306,7 +267,7 @@
                     Hospital Primary Email Id<span class="required">*</span>
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="text" [(ngModel)]="hospital.primaryEmailId" name="hospital_primary_email">
+                    <input class="form-control" type="email" [(ngModel)]="Hospital.contact.primaryEmailId" name="hospital_primary_email" required>
                 </div>
             </div>
         </div>
@@ -316,7 +277,7 @@
                     Hospital Secondary Email Id
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="text" [(ngModel)]="hospital.secondaryEmailId" name="hospital_secondary_email">
+                    <input class="form-control" type="email" [(ngModel)]="Hospital.contact.secondaryEmailId" name="hospital_secondary_email">
                 </div>
             </div>
         </div>
@@ -326,7 +287,7 @@
                     Website URL
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="text" [(ngModel)]="hospital.website" name="hospital_url">
+                    <input class="form-control" type="text" [(ngModel)]="Hospital.contact.websiteUrl" name="hospital_url">
                 </div>
             </div>
         </div>
@@ -341,7 +302,7 @@
                     Authorised Personnel Name<span class="required">*</span>
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="text" [(ngModel)]="hospital.personnelName" name="personnel_name" required>
+                    <input class="form-control" type="text" [(ngModel)]="Hospital.admin.personnelName" name="personnel_name" required>
                 </div>
             </div>
         </div>
@@ -351,7 +312,7 @@
                     Personnel Contact Number<span class="required">*</span>
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="text" [(ngModel)]="hospital.personnelNo" name="personnel_contact" required
+                    <input class="form-control" type="text" [(ngModel)]="Hospital.admin.personnelNumber" name="personnel_contact" required
                     onkeypress="return event.charCode === 0 || /\d/.test(String.fromCharCode(event.charCode));"
                     minlength="10" maxlength="10">
                 </div>
@@ -363,7 +324,7 @@
                     Personnel Email ID<span class="required">*</span>
                 </div>
                 <div class="col col-md-5 offset-md-2">
-                    <input class="form-control" type="email" [(ngModel)]="hospital.personnelEmail" name="personnel_email"
+                    <input class="form-control" type="email" [(ngModel)]="Hospital.admin.personnelEmail" name="personnel_email"
                         required>
                 </div>
             </div>
@@ -376,7 +337,7 @@
     <div class="form-group">
         <div class="row top-buffer">
             <div class="col col-md-22 text-center">
-                <button class="btn btn-outline-cerner" (click)="registerHospital()" ng-disabled="myForm.$invalid">Register</button>
+                <input class="btn btn-outline-cerner" type="submit" value="Register">
             </div>
         </div>
     </div>
