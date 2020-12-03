@@ -12,12 +12,12 @@
   }
 
   .btn-outline-cerner{
-    border-color:#98ba0d;
-    color: #98ba0d;
+    border-color:#19b13f;
+    color: #19b13f;
   }
 
   .btn-outline-cerner:hover{   
-    background-color:#98ba0d;
+    background-color: #19b13f;
     color:white;
   }
 
@@ -42,3 +42,18 @@
     border-radius: 5px;
   
   }
+  .col-form-label
+  {
+    font-weight: bold;
+  }
+
+  .btn-xl {
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 10px;
+  }
+
+  .head{
+    color: rgb(39, 196, 39);
+  }
+

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Contact } from '../models/contact/contact';
 import { BehaviorSubject } from 'rxjs';
 import { Admin } from '../models/admin/admin';
 import { Hospital } from '../models/hospital/hospital';
@@ -10,8 +11,8 @@ import { Hospital } from '../models/hospital/hospital';
 export class RegisterService {
 
   flag: boolean
-  obs :BehaviorSubject<boolean> = new BehaviorSubject(null)
- 
+  obs: BehaviorSubject<boolean> = new BehaviorSubject(null)
+
   constructor(public http: HttpClient) { }
 
   public registerHospital(hospital: Hospital) {
@@ -19,8 +20,14 @@ export class RegisterService {
     this.http.post('http://localhost:8080/register', hospital, { responseType: 'text' }).subscribe(x => console.log(x))
   }
 
+  public viewall(hospital: Hospital) {
+    this.http.post('http://localhost:8080/adminvalidate', hospital, { responseType: 'text' }).subscribe(x => console.log(x))
+  }
   public getDetails(hospital: Hospital) {
     var pincode = hospital.site.location.pincode
+    var options = "Select Area";
+
+
     var xhReq = new XMLHttpRequest();
     xhReq.open("GET", "https://api.postalpincode.in/pincode/" + pincode, false);
     xhReq.send(null);
@@ -35,6 +42,13 @@ export class RegisterService {
       var state = jsonObject[0].PostOffice[0].Circle;
       hospital.site.location.district = city;
       hospital.site.location.state = state;
+      var i;
+
+      for (i = 0; i < jsonObject[0].PostOffice.length; i++) {
+        var area = jsonObject[0].PostOffice[i].Name;
+        options += "<option>" + area + "</option>";
+      }
+      document.getElementById("area").innerHTML = options;
     }
     return hospital
   }
@@ -43,7 +57,62 @@ export class RegisterService {
     return await this.http.post<boolean>("http://localhost:8080/verify", hospital.admin);
   }
 
-  public updatePassword(admin: Admin){
+  public updatePassword(admin: Admin) {
     return this.http.post<object>("http://localhost:8080/update", admin);
   }
+  public validate_pemail(hospital: Hospital) {
+    var email = hospital.contact.primaryEmailId;
+    var api_key = "2fc4d291b28f119d663554ea341baea9";
+    var smpt = "1";
+    var format = "1";
+    var xhReq = new XMLHttpRequest();
+    xhReq.open("GET", "http://apilayer.net/api/check?access_key=" + api_key + "&email=" + email + "&smtp=" + smpt + "&format=" + format, false);
+    xhReq.send(null);
+    var jsonObject = JSON.parse(xhReq.responseText);
+    var b = JSON.parse(JSON.stringify(jsonObject));
+    console.log(b);
+    if (jsonObject.smtp_check == false) {
+      hospital.contact.primaryEmailId = ''
+      alert("Please enter valid Email ID")
+    }
+    return hospital
+  }
+
+  public validate_peremail(hospital: Hospital) {
+    var peremail = hospital.admin.personnelEmail;
+    var api_key = "2fc4d291b28f119d663554ea341baea9";
+    var smpt = "1";
+    var format = "1";
+    var xhReq = new XMLHttpRequest();
+    xhReq.open("GET", "http://apilayer.net/api/check?access_key=" + api_key + "&email=" + peremail + "&smtp=" + smpt + "&format=" + format, false);
+    xhReq.send(null);
+    var jsonObject = JSON.parse(xhReq.responseText);
+    var b = JSON.parse(JSON.stringify(jsonObject));
+    console.log(b);
+    if (jsonObject.smtp_check == false) {
+      hospital.admin.personnelEmail = ''
+      alert("Please enter valid Email ID")
+    }
+    return hospital
+  }
+
+  public validate_landline(hospital: Hospital) {
+    var landlineno = hospital.contact.landlineNo;
+    console.log(landlineno.length)
+    if (landlineno.length != 7) {
+      hospital.contact.landlineNo = ''
+      alert('Enter Valid 7 digit Landline Number')
+    }
+    return hospital
+  }
+
+  public validate_mobile(hospital: Hospital) {
+    var mobno = hospital.contact.mobileNo;
+    if (mobno.length != 10) {
+      hospital.contact.mobileNo = ''
+      alert('Enter Valid 10 digit Mobile Number')
+    }
+    return hospital
+  }
+
 }

@@ -8,7 +8,7 @@ import { Admin } from '../models/admin/admin';
 import { Contact } from '../models/contact/contact';
 import { RegisterService } from '../service/register.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { HttpClient } from '@angular/common/http';
 class telephone {
   landlineNo: string = '';
   landlineStd: string = '';
@@ -21,6 +21,14 @@ class telephone {
   tollfreeNo: string = '';
   tollfreeStd: string = '';
 }
+class contact{
+  primaryEmailId:string='';
+}
+
+class admin{
+  personnelEmail:string='';
+}
+
 
 @Component({
   selector: 'app-registration',
@@ -34,9 +42,11 @@ export class RegistrationComponent implements OnInit {
   public Hospital = new Hospital()
   checkArray: FormArray
   telephone = new telephone()
+  contact = new contact()
+  admin = new admin()
   personnelEmailFlag = true;
-
-  constructor(public title: Title, public router: Router, public register: RegisterService, public fb: FormBuilder) {
+  
+  constructor(public title: Title, public router: Router, public http: HttpClient, public register:RegisterService, public fb:FormBuilder) {
     this.title.setTitle("Register with us")
     this.Hospital.admin = new Admin()
     this.Hospital.contact = new Contact()
@@ -46,11 +56,14 @@ export class RegistrationComponent implements OnInit {
     this.form = this.fb.group({
       checkArray: this.fb.array([], [Validators.required])
     })
+  
   }
 
   ngOnInit(): void {
     this.checkArray = this.form.get('checkArray') as FormArray;
   }
+
+
 
   get_details() {
     var pincode = this.Hospital.site.location.pincode
@@ -58,10 +71,14 @@ export class RegistrationComponent implements OnInit {
       this.Hospital.site.location.state = '';
       this.Hospital.site.location.district = '';
       alert("Please enter Pincode");
+      var options = "Select Area";
+      options = "<option> Select Area </option>";
+      document.getElementById("area").innerHTML = options;
     }
     else {
       //fetching the state and district through an api call
       this.Hospital = this.register.getDetails(this.Hospital)
+      
     }
   }
 
@@ -103,5 +120,60 @@ export class RegistrationComponent implements OnInit {
     console.log(this.checkArray.length)
   }
 
+  validate_pemail(){
+    var email = this.Hospital.contact.primaryEmailId;
+    
+    if(email != '')
+    {
+      console.log(email);
+      this.Hospital = this.register.validate_pemail(this.Hospital)
+    }
+    else
+    {
+      alert("Please enter valid Email ID")
+    }
+  }
+
+  validate_peremail(){
+    var peremail = this.Hospital.admin.personnelEmail;
+    if(peremail != '')
+    {
+      this.Hospital = this.register.validate_peremail(this.Hospital)
+    }
+    else
+    {
+      alert("Please enter valid Email ID")
+    }
+  }
+
+  validate_landline(){
+    var landlineno = this.Hospital.contact.landlineNo;
+    if(landlineno != '')
+    {
+        this.Hospital = this.register.validate_landline(this.Hospital)
+    } 
+    else
+    {
+      alert("test")
+    }
+  }
+
+  validate_mobile(){
+    var mobno = this.Hospital.contact.mobileNo;
+    if(mobno != '')
+    {
+        this.Hospital = this.register.validate_mobile(this.Hospital)
+    }
+    else{
+      alert("test")
+    }
+  }
+   
+  redirect(){
+    alert("here");
+    
+    window.location.replace("http://localhost:4200/hospitaldetails");
+    
+  }
 
 }
