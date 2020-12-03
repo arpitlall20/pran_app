@@ -9,9 +9,9 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.stereotype.Repository;
 
+import com.cerner.pran.model.CernerAdmin;
 import com.cerner.pran.model.Hospital;
 import com.cerner.pran.model.HospitalAdmin;
 
@@ -124,5 +124,18 @@ public class RegisterDaoImpl implements RegisterDao {
 			// TODO: handle exception
 		}
     }
+    
+	@Override
+	public boolean updateCernLoginDate(String email) {
+
+		Query query = em.createQuery("update CernerAdmin set lastLoginDate = :date where personnelEmail = :email");
+		query.setParameter("date", new Date());
+		query.setParameter("email", email);
+		int n = query.executeUpdate();
+		if(n != 0)
+			return true;
+		else
+			return false;
+	}
 
 }
