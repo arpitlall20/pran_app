@@ -7,4 +7,5 @@ export class Address {
     subDistrict:String
     longitute:number
     latitude:number
+    area:String
 }

@@ -27,13 +27,12 @@ export class HospitalAdminLoginComponent implements OnInit {
 
   verifyLogin() {
     console.log("TEST")
-    this.http.post<Response>('http://localhost:8080/adminlogin', this.login).subscribe(x => {
-      console.log(x.status)
-      // this.data.admin.next(x)
-      // if (x.lastLogin === null)
-      //   this.router.navigate(['initiallogin'])
-      // else
-      //   this.router.navigate([''])
+    this.http.post<Admin>('http://localhost:8080/adminlogin', this.login).subscribe(x => {
+      this.data.admin.next(x)
+      if (x.lastLogin === null)
+        this.router.navigate(['initiallogin'])
+      else
+        this.router.navigate([''])
     }, y => {
       console.log(y)
       this.errorFlag = true

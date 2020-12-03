@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cerner.pran.dao.HospitalAdminDao;
+import com.cerner.pran.dao.AdminDao;
 import com.cerner.pran.dao.RegisterDaoImpl;
+import com.cerner.pran.model.CernerAdmin;
 import com.cerner.pran.model.Hospital;
 import com.cerner.pran.model.HospitalAdmin;
+import com.cerner.pran.service.LoginService;
 import com.cerner.pran.service.RegisterService;
 import com.cerner.pran.service.UtilitiesService;
 
@@ -25,11 +27,13 @@ import com.cerner.pran.service.UtilitiesService;
 public class HospitalController {
 
 	@Autowired 
-	public HospitalAdminDao dao;
+	public AdminDao dao;
 	@Autowired
 	public RegisterDaoImpl dao1;	
 	@Autowired
-	public RegisterService service;
+	public RegisterService register;
+	@Autowired
+	public LoginService login;
 	@Autowired 
 	public UtilitiesService utilities;
 	
@@ -42,30 +46,30 @@ public class HospitalController {
 	@GetMapping("/findhospital")
 	public ResponseEntity<Boolean> findHospital(@RequestParam("name") String name){
 		System.out.println(name);
-		boolean bool = service.findHospitalByName(name);
+		boolean bool = register.findHospitalByName(name);
 		return new ResponseEntity<Boolean>(bool, HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/validatehospital")
-	public ResponseEntity<Boolean> validateHospital(@RequestBody HttpEntity<String> httpEntity){
-		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+	public ResponseEntity<Boolean> validateHospital(@RequestBody HospitalAdmin admin){
+		return new ResponseEntity<Boolean>(register.sendRegistrationMail(admin), HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/register")
 	public ResponseEntity<String> registerApi(@RequestBody Hospital hospital) {
 		System.out.println(hospital);
-		service.registerHospital(hospital);
+		register.registerHospital(hospital);
 		return new ResponseEntity<String>("success",HttpStatus.OK);
 	}
 
 	@PostMapping(path="/verify")
 	public ResponseEntity<Boolean> verifyCredentials(@RequestBody HospitalAdmin admin){
-		return new ResponseEntity<Boolean>(service.login(admin),HttpStatus.OK);
+		return new ResponseEntity<Boolean>(login.login(admin),HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/update")
 	public ResponseEntity<Boolean> updatePassword(@RequestBody HospitalAdmin admin){
-		return new ResponseEntity<Boolean>(service.updatePassword(admin),HttpStatus.OK);
+		return new ResponseEntity<Boolean>(login.updatePassword(admin),HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/adminlogin")
@@ -74,7 +78,7 @@ public class HospitalController {
 		try {
 			jsonObject = new JSONObject(httpEntity.getBody());
 			System.out.println(jsonObject);
-			HospitalAdmin admin = service.login(jsonObject);
+			HospitalAdmin admin = login.login(jsonObject);
 			if(admin != null)
 				return new ResponseEntity<HospitalAdmin>(admin, HttpStatus.OK);
 			else {
@@ -82,7 +86,26 @@ public class HospitalController {
 			}
 			
 		} catch (JSONException e) {
-			return new ResponseEntity<HospitalAdmin>(service.login(jsonObject), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<HospitalAdmin>(login.login(jsonObject), HttpStatus.BAD_REQUEST);
+			// TODO Auto-generated catch block
+		}
+	}
+	
+	@PostMapping(path="/cernadminlogin")
+	public ResponseEntity<CernerAdmin> cernAdminLogin(HttpEntity<String> httpEntity) {
+		JSONObject jsonObject = null;
+		try {
+			jsonObject = new JSONObject(httpEntity.getBody());
+			System.out.println(jsonObject);
+			CernerAdmin admin = login.loginCernAdmin(jsonObject);// = login.login(jsonObject);
+			if(admin != null)
+				return new ResponseEntity<CernerAdmin>(admin, HttpStatus.OK);
+			else {
+				return new ResponseEntity<CernerAdmin>(admin, HttpStatus.BAD_REQUEST);
+			}
+			
+		} catch (JSONException e) {
+			return new ResponseEntity<CernerAdmin>(new CernerAdmin(), HttpStatus.BAD_REQUEST);
 			// TODO Auto-generated catch block
 		}
 	}

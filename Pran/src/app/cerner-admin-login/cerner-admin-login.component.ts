@@ -1,4 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+
+class Login {
+  email: string
+  password: string
+}
 
 @Component({
   selector: 'app-cerner-admin-login',
@@ -7,13 +14,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CernerAdminLoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(public http: HttpClient, public router: Router) { }
+
 
   ngOnInit(): void {
   }
 
-  verifyLogin(){
-    
-  }
+  errorMessage: string
+  errorFlag = false
+  login: Login = new Login()
 
+  verifyLogin() {
+    console.log("TEST")
+    this.http.post<Response>('http://localhost:8080/cernadminlogin', this.login).subscribe(x => {
+      console.log(x.status)
+      this.router.navigate(['adminvalidate'])
+    }, y => {
+      console.log(y)
+      this.errorFlag = true
+      this.errorMessage = "Invalid Username/Password"
+    })
+
+  }
 }
