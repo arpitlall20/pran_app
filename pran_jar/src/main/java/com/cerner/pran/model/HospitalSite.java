@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Table(name="site")
 @Entity
@@ -33,7 +37,7 @@ public class HospitalSite {
 
 	@Id
 	@SequenceGenerator(name = "site_seq", sequenceName = "system.site_seq", allocationSize = 1)
-	@GeneratedValue(generator = "system.site_seq", strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator = "system.site_seq", strategy = GenerationType.AUTO)
 	@Column(name="site_id")
 	private int id;
 	
@@ -46,15 +50,18 @@ public class HospitalSite {
 	@Column(name="site_created_date")
 	private Date createdDate;
 
-	@OneToOne(cascade = {CascadeType.PERSIST})
+	@OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
 	@JoinColumn(name="site_hosp_id")
+	@JsonBackReference(value="hosp_site")
 	private Hospital hospital;
 
 	@OneToOne(cascade = {CascadeType.PERSIST})
 	@JoinColumn(name="site_loc_id")
+	@JsonManagedReference(value="loc_site")
 	private HospitalLocation location;
 	
-	@OneToOne(mappedBy="hospitalSite")
+	@OneToOne(mappedBy="hospitalSite", fetch = FetchType.LAZY)
+//	@JsonBackReference(value="cont_site")
 	private ContactInfo contact;
 
 	public String getSiteName() {

@@ -4,10 +4,10 @@ import { Site } from '../site/site'
 
 
 export class Hospital {
-    hospitalName:String
-    hospitalType:String
-    hospitalAccredition:String
-    hospitalRegistrationNo:String
+    hospitalName:string
+    hospitalType:string
+    hospitalAccredition:string
+    hospitalRegistrationNo:string
     admin:Admin
     site:Site
     contact:Contact

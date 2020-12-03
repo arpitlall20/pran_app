@@ -5,12 +5,15 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="location")
@@ -36,10 +39,9 @@ public class HospitalLocation {
 	}
 
 
-
 	@Id
 	@SequenceGenerator(name = "location_seq", sequenceName = "system.location_seq", allocationSize = 1)
-	@GeneratedValue(generator = "system.location_seq", strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator = "system.location_seq", strategy = GenerationType.AUTO)
 	@Column(name="loc_id")
 	private int id;
 	
@@ -73,7 +75,8 @@ public class HospitalLocation {
 	@Column(name="loc_created_date")
 	private Date createdDate;
 	
-	@OneToOne(mappedBy = "location")
+	@OneToOne(mappedBy = "location", fetch = FetchType.LAZY)
+	@JsonBackReference(value="loc_site")
 	private HospitalSite site;
 
 	public String getAddress() {

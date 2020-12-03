@@ -4,15 +4,26 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-@Table(name="Hospital")
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Table(name="hospital")
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Hospital {
+	
+	public Hospital() {
+	}
 
 	public Hospital(String hospitalName, String hospitalRegistrationNo, String hospitalAccredition, String hospitalType,
 			Date hospitalCreateDate, Date hospitalCeaseDate) {
@@ -48,14 +59,20 @@ public class Hospital {
 	
 	@Column(name="hosp_cease_date")
 	private Date hospitalCeaseDate;
-		
+	
 	@OneToOne(mappedBy = "hospital")
+	@JsonManagedReference(value = "hosp_admin")
+//	@JsonProperty("admin")
 	private HospitalAdmin admin;
 
 	@OneToOne(mappedBy = "hospital")
+	@JsonManagedReference(value = "hosp_contact")
+//	@JsonProperty("contact")
 	private ContactInfo contact;
-
+	
 	@OneToOne(mappedBy = "hospital")
+	@JsonManagedReference(value="hosp_site")
+//	@JsonProperty("site")
 	private HospitalSite site;
 
 	public String getHospitalName() {
